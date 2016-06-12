@@ -61,7 +61,7 @@ class MagicSearcher(object):
     # find all references to given offset
     def __get_refs(self, bin_sh_offset):
         # get Xrefs to /bin/sh string
-        output = self.r2.cmd('axt @' + bin_sh_offset + self.lea_bin_sh)
+        output = self.r2.cmd('axt @' + bin_sh_offset + self.bin_sh_ref)
         lines = output.split('\n')
         refs = []
         for line in lines:
@@ -239,11 +239,11 @@ class MagicSearcher(object):
 # TODO: not implemented yet
 class MagicSearcherx86(MagicSearcher):
     # TODO libc using cdecl or fastcall?
-    lea_bin_sh = '~lea edi'
-    bin_sh_register = 'edi, '
+    bin_sh_ref = '~mov [esp'
+    bin_sh_register = '[esp]'
     followed_registers = ["eax", "ebx", "ecx", "edx", "edi", "esi"]
     # TODO libc using cdecl or fastcall?
-    execve_argument_registers = ["rcx", "rdx"]
+    execve_argument_registers = ["[esp+4]", "[esp+8]"]
     syscall_argument_registers = ["rbx", "rcx"]
     syscall_num_registers = ["eax", "al"]
     sycall_num_hex = '0xb'
@@ -254,7 +254,7 @@ class MagicSearcherx86(MagicSearcher):
         super(MagicSearcherx86, self).__init__(libc, follow_depth, search_depth)
 
 class MagicSearcherx64(MagicSearcher):
-    lea_bin_sh = '~lea rdi'
+    bin_sh_ref = '~lea rdi'
     bin_sh_register = 'rdi, '
     followed_registers = ["rax", "rbx", "rcx", "rdx", "rdi", "rsi", "r8", "r9", "r10", "r11", "r12", "r13", "r14", "r15",
                             "eax", "ebx", "ecx", "edx", "edi", "esi"]
