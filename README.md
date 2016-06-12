@@ -56,10 +56,7 @@ Unfortunately, at the moment magic.py only works with 64-bit libraries on the x8
 
 
 # TODO
-* Cleanup the code
-* Add commandline option for search-depth
-* Extend for 32-Bit libraries
-* Test with more libcs
+* Test with more libcs (especially 32bit)
 
 
 [r2]: http://www.radare.org/
