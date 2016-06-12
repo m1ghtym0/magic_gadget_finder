@@ -52,7 +52,7 @@ to find such magic gadgets automatically for a given libc.
       Here's your magic gadget:
       Offset: 0x00000000041374
 
-Unfortunately, at the moment magic.py only works with 64-bit libraries on the x86-64 architecture.
+Unfortunately, at the moment magic.py only works on the x86/x86-64 architecture.
 
 
 # TODO
