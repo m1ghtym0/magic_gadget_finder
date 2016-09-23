@@ -51,7 +51,7 @@ class MagicSearcher(object):
                     return int(magic_offset, 16)
     
                 # check if syscall is issued with rdi->/bin/sh
-                magic_offset = self.__check_syscall(r2, ref)
+                magic_offset = self.__check_syscall(ref)
                 if magic_offset:
                     return int(magic_offset, 16)
     
