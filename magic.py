@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 import r2pipe
 import argparse
 import sys
@@ -25,16 +25,16 @@ class MagicSearcher(object):
         output = self.r2.cmd('/ /bin/sh')
         strings = output.split('\n')
         offsets = []
-        print LINE
+        print(LINE)
         for string in strings:
             # extract offset of /bin/sh string
             offset = re.search(r'0x[0-9a-f]*', string)
             if offset:
                 offset = offset.group(0)
-                print 'Found /bin/sh @ ' + offset
+                print('Found /bin/sh @ ' + offset)
                 offsets.append(offset)
         if not offsets:
-            print 'Couldn\'t find any /bin/sh string'
+            print('Couldn\'t find any /bin/sh string')
         return offsets
     
     # try to find magic gadget  with given /bin/sh strings
@@ -175,8 +175,8 @@ class MagicSearcher(object):
                         if len(registers) == 0:
                             return offset
     
-        print LINE
-        print 'ERROR couldn\'t trace the following registers: ' + ",".join(registers)
+        print(LINE)
+        print('ERROR couldn\'t trace the following registers: ' + ",".join(registers))
         return None
    
     # check if correct execve syscall number is set 
@@ -228,12 +228,12 @@ class MagicSearcher(object):
     
         return offset, opcode, mnemonics
     
-    # print whole magic gadget code
+    # print(whole magic gadget code
     def __print_gadget(self, magic_offset, final_offset):
         diff = int(final_offset, 16) - int(magic_offset, 16)
         cmd = 'pId %d @ ' % (diff+1)
-        print LINE
-        print self.r2.cmd(cmd + magic_offset)
+        print(LINE)
+        print(self.r2.cmd(cmd + magic_offset))
 
 
 # TODO: not implemented yet
@@ -290,12 +290,12 @@ def main(argv):
     gadget_offset = magic.find_magic_gadget(bin_sh_offsets)
 
     if not gadget_offset:
-        print LINE
-        print 'Couldn\'t find a magic gadget:('
+        print(LINE)
+        print('Couldn\'t find a magic gadget:(')
     else:
-        print LINE
-        print 'Here\'s your magic gadget:'
-        print 'Offset: {0:#016x}'.format(gadget_offset)
+        print(LINE)
+        print('Here\'s your magic gadget:')
+        print('Offset: {0:#016x}'.format(gadget_offset))
 
 
     magic.quit()
